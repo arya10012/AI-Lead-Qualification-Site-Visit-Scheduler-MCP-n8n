@@ -52,16 +52,17 @@ All qualified leads and confirmed site visit details are automatically stored in
 ---
 
 ## 🧠 System Architecture
-User (Chat)
-↓
-n8n Chat Trigger
-↓
-AI Agent (Google Gemini)
-↓
-MCP Client
-↓
-MCP Server
-↓
+
+User (Chat)<br>
+↓<br>
+n8n Chat Trigger<br>
+↓<br>
+AI Agent (Google Gemini)<br>
+↓<br>
+MCP Client<br>
+↓<br>
+MCP Server<br>
+↓<br>
 Google Sheets (Lead Storage)
 
 ---
