@@ -28,6 +28,29 @@ She:
 
 ---
 
+## 🖼️ Workflow & Data Screenshots
+
+### 1️⃣ MCP Client Workflow (n8n)
+This workflow handles user interaction, AI agent execution using Google Gemini, and communicates with the MCP server for lead qualification and site visit scheduling.
+
+![MCP Client Workflow](images/mcp-client-lead-qualification-2.png)
+
+---
+
+### 2️⃣ MCP Server Workflow
+The MCP server exposes tools to process booking requests and stores validated lead and visit data into Google Sheets.
+
+![MCP Server Workflow](images/mcp-server-lead-qualfication.png)
+
+---
+
+### 3️⃣ Lead Data Stored in Google Sheets
+All qualified leads and confirmed site visit details are automatically stored in Google Sheets, acting as a lightweight CRM.
+
+![Google Sheet Lead Data](images/google-sheet-client-data.png)
+
+---
+
 ## 🧠 System Architecture
 User (Chat)
 ↓
