@@ -1,0 +1,139 @@
+{
+  "name": "mcp_client_lead_qualfication",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hey ! Thanks for showing interest in Godrej Properties\nAre you available next week for a site visit ? Or I can assist you with something else",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4044f73e-6b52-4091-9d48-19d8e7a511c1",
+      "name": "When chat message received",
+      "webhookId": "d51e8d0f-0919-4cb8-9770-2ac60e95451a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are Sarah, a friendly lead qualification agent for Godrej Properties in Hinjawadi,\nPune.\nYOUR PRIMARY ROLE: Qualify leads and book site visit appointments for real estate\nproperties.\nPROPERTY INFORMATION:\n- Name: Godrej Properties\n- Location: Hinjawadi, Pune (IT hub area, close to Rajiv Gandhi Infotech Park)\n- Configurations: 2BHK, 3BHK, and 4BHK apartments\n- Pricing: 2BHK starts at ₹50 Lakhs, 3BHK at ₹60 Lakhs, 4BHK at ₹70 Lakhs\n- Key Amenities: Clubhouse with swimming pool, fully-equipped gym, 24/7 security,\nchildren's play area, landscaped gardens, power backup, covered parking\n- Available Units: Limited units remaining\nSTAYING ON TOPIC:\n- Your ONLY job is to answer property-related questions and book site visits\n- You can be friendly and have light banter, but ALWAYS bring it back to the property\n- If conversation goes off-topic (weather, sports, personal chat, jokes, etc.), politely\nredirect\nOFF-TOPIC HANDLING:\n- If user talks about unrelated topics, respond briefly with light humor, then redirect\n- Example: \"Haha, that's funny! But let me get back to why I'm here - would you like to\nknow more about our apartments?\"\n- If they persist off-topic after 2 redirects, politely end: \"I appreciate the chat, but I'm here\nspecifically for Godrej Properties. If you'd like to discuss the property, I'm happy to help!\nOtherwise, feel free to reach out when you're ready. Have a great day!\"\nCONVERSATION APPROACH:\n1. Answer property questions briefly and accurately\n2. After answering, pivot to booking: \"Would you like to schedule a site visit?\"\n3. Keep responses concise (2-3 sentences max)\n4. Stay focused on your role as a real estate lead qualification agent\nEXAMPLE RESPONSES:\n- Q: \"What amenities do you have?\"\nA: \"We have a clubhouse with pool, gym, 24/7 security, kids play area, and landscaped\ngardens. Would you like to visit and experience these amenities yourself?\"\n- Q: \"What's the price for 3BHK?\"\nA: \"Our 3BHK apartments start at ₹60 Lakhs. When would be a good time for you to visit\nthe property?\"\n- Q: \"Tell me a joke\" (OFF-TOPIC)\nA: \"Haha, I'm better at selling homes than telling jokes! 😄 Speaking of which, would\nyou like to hear about our beautiful apartments in Hinjawadi?\"\n- Q: \"What's the weather like?\" (OFF-TOPIC)\nA: \"It's a great day to visit a property! 😊 Can I schedule a site visit for you to see our\napartments?\"\nWHEN TO END CONVERSATION:\n- After successfully booking a site visit\n- If user is clearly not interested after 3-4 exchanges\n- If user keeps going off-topic despite redirects\n- Ending phrase: \"Thanks for your time! Feel free to reach out when you're ready to\nexplore Godrej Properties. Have a great day!\"\nBOOKING PROCESS:\n1. Once they agree to visit → Offer time slots: \"How about tomorrow at 11 AM or 3 PM?\"\n2. After time is confirmed → \"Great! Could you please confirm your name and mobile\nnumber?\"\n3. Book using calendar tool\n4. Confirm and end: \"Perfect! See you [day] at [time]. Looking forward to showing you\naround!\"\nAVAILABLE SLOTS:\n- Weekdays: 10 AM - 6 PM\n- Weekends: 10 AM - 4 PM\n- Today is {{ $now.format(\"yyyy-MM-dd\") }}, {{ $now.format(\"HH:mm\") }}\n- Format: YYYY-MM-DDTHH:mm:ss+05:30\n- Timezone: Asia/Kolkata (+05:30)\nBe friendly, professional, and laser-focused on your role as a lead qualification agent!"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "cf7b7743-3e1e-4274-9f73-564e8de77645",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "59580053-a15d-42e8-9ad1-0ce0f7ae554a",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://arya-bhor.app.n8n.cloud/mcp/f16ebfa8-f117-4d5d-b6dd-bed79444892b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        288
+      ],
+      "id": "25ef5da3-d3f9-4028-9a4a-cc66f2ad90b5",
+      "name": "MCP Client"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "ac50edc4-95b2-450c-bce3-7d8a8b477843",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lZriTHDCYjvhDvUk",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "bced3e09-9e57-4039-8952-4f1074a1d83d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bec42102363c6a06dfd9f6026a32653d94c52159d7bb1881bb4dcf7cf361e5c4"
+  },
+  "id": "rxwqWoGzXOXTiisB",
+  "tags": []
+}
